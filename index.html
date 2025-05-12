@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1.0">
+    <title>我的作品集</title>
+    <!-- 预加载关键资源 -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://npm.elemecdn.com">
+    <link rel="preload" as="style" href="https://npm.elemecdn.com/lxgw-wenkai-webfont@1.1.0/style.css" />
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- 异步加载CSS -->
+    <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-webfont@1.1.0/style.css" />
+    <!-- 备用链接 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <!-- 备用链接 -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <link rel="stylesheet" href="styles01.css" media="print" onload="this.media='all'">
+    <!-- 优化favicon -->
+    <link rel="icon" href="./images/logo.ico" type="image/x-icon" sizes="16x16 32x32">
+    <link rel="icon" href="./images/logo.svg" type="image/svg+xml">
+    <!-- 关键CSS内联 -->
+    <style>
+        /* 首屏关键样式 */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            z-index: 9999;
+            transition: opacity 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            z-index: 1000;
+            transition: width 0.1s;
+        }
+        .container {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        .container.visible {
+            opacity: 1;
+        }
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .scroll-top-btn.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: rgba(52, 152, 219, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fadeOut 1s forwards;
+            z-index: 9999;
+        }
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 动态背景容器 -->
+    <div class="dynamic-bg"></div>
+
+    <!-- 加载动画 -->
+    <div class="loading-screen">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- 滚动进度条 -->
+    <div class="progress-bar"></div>
+
+    <!-- 背景装饰元素 -->
+    <div class="decoration-lines left"></div>
+    <div class="decoration-lines right"></div>
+    <div class="floating-dots">
+        <div class="floating-dot"></div>
+        <div class="floating-dot"></div>
+        <div class="floating-dot"></div>
+        <div class="floating-dot"></div>
+    </div>
+
+    <!-- 左侧装饰元素 -->
+    <div class="side-decoration left">
+        <div class="geometric-shape circle"></div>
+        <div class="geometric-shape square"></div>
+        <div class="geometric-shape triangle"></div>
+        <div class="geometric-line"></div>
+        <div class="geometric-line"></div>
+        <div class="geometric-line"></div>
+    </div>
+
+    <!-- 右侧装饰元素 -->
+    <div class="side-decoration right">
+        <div class="geometric-shape circle"></div>
+        <div class="geometric-shape square"></div>
+        <div class="geometric-shape triangle"></div>
+        <div class="geometric-line"></div>
+        <div class="geometric-line"></div>
+        <div class="geometric-line"></div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="decoration-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <div class="profile">
+                <div class="avatar">
+                    <img src="./images/logotp.webp" alt="个人头像" loading="lazy" width="120" height="120">
+                </div>
+                <h1>其思衔木鸣</h1>
+                <p class="title">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    物联网工程专业本科生
+                </p>
+                <div class="location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>徐州，江苏，中国🇨🇳</span>
+                </div>
+            </div>
+
+            <div class="about">
+                <div class="section-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h2>关于我</h2>
+                </div>
+                <p>我是大连科技学院物联网工程专业的学生。掌握 Java、Web 开发、物联网开发、Linux等技术，持有 RHCSA、物联网研发工程师岗位证书等多项技能认证。在校期间担任班长，带领班级多次评优；主持和参与过多个项目，有省级获奖的一站式摄影预约平台和基于BIM和虚幻引擎5的家装流程智能管理平台、G-Note安卓 APP 、基于51单片机的超声波测距系统设计、基于物联网和 Android 的温湿度采集系统等，此外，还参与过政府实习负责数据统计工作。我性格积极主动，乐于探索新领域、新功能与新技术，充满创新精神，面对复杂问题时总能保持好奇心，主动钻研解决方案。执行力出色，做事雷厉风行，一旦确定目标，便能有条不紊推进任务，并始终注重细节，力求将每件事做到尽善尽美。未来，我希望深耕专业领域，持续探索新技术，在实践中不断提升自我，创造更多价值。</p>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <i class="fab fa-java"></i>
+                        <span>Java</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-leaf"></i>
+                        <span>Spring Boot</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-vuejs"></i>
+                        <span>Vue.js</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-python"></i>
+                        <span>Python</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fa-solid fa-cat"></i>
+                        <span>Tomcat</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fa-brands fa-linux"></i>
+                        <span>Linux</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fa-solid fa-c"></i>
+                        <span>C语言</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fa-solid fa-gears"></i>
+                        <span>STM32</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 社交媒体 -->
+            <div class="social-section">
+                <div class="section-header">
+                    <i class="fas fa-share-alt"></i>
+                    <h2>社交媒体</h2>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/SisiGuo04" target="_blank" class="social-icon" title="GitHub">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                        <div class="tooltip">即将跳转到 GitHub</div>
+                    </a>
+                    <a href="https://blog.csdn.net/A_GandS" target="_blank" class="social-icon" title="CSDN">
+                        <i class="fas fa-code"></i>
+                        <span>CSDN</span>
+                        <div class="tooltip">即将跳转到 CSDN</div>
+                    </a>
+                    <button class="social-icon" id="blog-btn" title="blog">
+                        <i class="fas fa-blog"></i>
+                        <span>博客</span>
+                        <div class="tooltip">即将跳转到 博客</div>
+                    </button>
+                    <button class="social-icon" id="wechat-btn" title="WeChat">
+                        <i class="fab fa-weixin"></i>
+                        <span>公众号</span>
+                    </button>
+                </div>
+            </div>
+            <!-- 轮播图项目展示 -->
+            <div class="carousel-container">
+                <div class="section-header">
+                    <i class="fas fa-project-diagram"></i>
+                    <h2>项目作品集合</h2>
+                </div>
+                <div class="carousel">
+                    <div class="carousel-track">
+                        <!-- 第一个轮播图 -->
+                        <div class="carousel-slide" data-modal-content="modal-content-1">
+                            <img src="./images/pps.gif" alt="Picture Perfect Scheduler：一站式摄影预约平台">
+                            <div class="slide-caption">
+                                <h3>Picture Perfect Scheduler：一站式摄影预约平台</h3>
+                                <p>一站式摄影预约平台，满足用户个性化摄影服务需求</p>
+                            </div>
+                        </div>
+                        <!-- 第二个轮播图 -->
+                        <div class="carousel-slide" data-modal-content="modal-content-2">
+                            <img src="./images/bmi.gif" alt="BMI健康助手">
+                            <div class="slide-caption">
+                                <h3>BMI健康助手</h3>
+                                <p>基于Web的交互式健康评估工具，提供BMI、体脂率等多项健康指标计算和个性化建议。</p>
+                            </div>
+                        </div>
+                        <!-- 第三个轮播图 -->
+                        <div class="carousel-slide" data-modal-content="modal-content-3">
+                            <img src="./images/ai-resume.gif" alt="AI简历助手：智能简历制作平台">
+                            <div class="slide-caption">
+                                <h3>AI简历助手：智能简历制作平台</h3>
+                                <p>基于Web的智能简历制作工具，集成AI技术，提供专业简历模板和自动内容生成功能</p>
+                            </div>
+                        </div>
+                        <!-- 第四个轮播图 -->
+                        <div class="carousel-slide" data-modal-content="modal-content-4">
+                            <img src="./images/gnote.gif" alt="G-Note：基于Android的笔记APP">
+                            <div class="slide-caption">
+                                <h3>G-Note：基于Android的笔记APP</h3>
+                                <p>一款功能完整的 Android 笔记应用，支持文本与图片笔记、社交广场等功能</p>
+                            </div>
+                        </div>
+                        <!-- 第五个轮播图 -->
+                        <div class="carousel-slide" data-modal-content="modal-content-5">
+                            <img src="./images/csbcjxt/封面.png" alt="基于单片机的超声波测距系统">
+                            <div class="slide-caption">
+                                <h3>基于单片机的超声波测距系统</h3>
+                                <p>使用 STC89C52 单片机和 HC-SR04 超声波传感器实现的智能测距系统，可应用于工业自动化和智能家居场景</p>
+                            </div>
+                        </div>
+                        <!-- 第六个轮播图 -->
+                        <div class="carousel-slide" data-modal-content="modal-content-6">
+                            <img src="./images/基于物联网和Android的温湿度采集系统/封面.png" alt="基于物联网和Android的温湿度采集系统">
+                            <div class="slide-caption">
+                                <h3>基于物联网和Android的温湿度采集系统</h3>
+                                <p>利用DHT11传感器和CC2541蓝牙模块实现的智能温湿度监测系统，支持实时数据采集、可视化显示及历史记录查看</p>
+                            </div>
+                        </div>
+                        <!-- 第七个轮播图 -->
+                        <div class="carousel-slide" data-modal-content="modal-content-7">
+                            <img src="./images/ue5/进入应用.png" alt="基于BIM和UE5的家装流程可视化应用">
+                            <div class="slide-caption">
+                                <h3>基于BIM和UE5的家装流程可视化应用</h3>
+                                <p>本项目基于虚幻引擎5（Unreal Engine 5）开发了一个家装流程可视化应用</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-button prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-button next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <div class="carousel-dots">
+                        <span class="active"></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 微信二维码弹窗 -->
+    <div class="modal" id="wechat-modal">
+        <div class="modal-content">
+            <span class="close" id="wechat-close">
+                <i class="fas fa-times"></i>
+            </span>
+            <div class="modal-header">
+                <i class="fab fa-weixin"></i>
+                <h3>扫码关注</h3>
+            </div>
+            <div class="social-preview">
+                <div class="social-preview-item">
+                    <i class="fab fa-github"></i>
+                    <span>Github</span>
+                </div>
+                <div class="social-preview-item">
+                    <i class="fas fa-blog"></i>
+                    <span>博客</span>
+                </div>
+                <div class="social-preview-item">
+                    <i class="fas fa-code"></i>
+                    <span>CSDN</span>
+                </div>
+                <div class="social-preview-item">
+                    <i class="fab fa-weixin"></i>
+                    <span>公众号</span>
+                </div>
+            </div>
+            <p class="modal-subtitle">扫描他带走我</p>
+            <img src="./images/wxOfficialAccount.webp" alt="微信公众号二维码" class="qr-code" loading="lazy" width="200" height="200">
+        </div>
+    </div>
+
+    <!-- 博客提示弹窗 -->
+    <div class="modal" id="blog-modal">
+        <div class="modal-content">
+            <span class="close-blog" id="blog-close">
+                <i class="fas fa-times"></i>
+            </span>
+            <div class="modal-header">
+                <i class="fas fa-blog"></i>
+                <h3>提示</h3>
+            </div>
+            <p class="modal-subtitle">由于服务器负载导致博客系统崩溃，还在维护中...</p>
+        </div>
+    </div>
+
+    <!-- 轮播图放大弹窗 -->
+    <div class="modal" id="carousel-modal">
+        <div class="modal-content carousel-modal-content">
+            <span class="close" id="carousel-close">
+                <i class="fas fa-times"></i>
+            </span>
+            <div class="carousel-modal-media">
+                <img id="carousel-modal-img" src="" alt="轮播图大图" loading="lazy">
+            </div>
+            <div class="carousel-modal-info">
+                <h3 id="carousel-modal-title"></h3>
+                <div id="carousel-modal-desc"></div>
+            </div>
+            <button class="carousel-modal-button prev" id="modal-prev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-modal-button next" id="modal-next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 版权信息 -->
+    <div id="copyright">
+        <p>Copyright © 2025 - <span id="currentYear"></span> 其思衔木鸣(GuoSisi). All rights reserved. <a href="./terms-of-use.html">Terms of Use</a> | <a
+            href="./privacy-policy.html">Privacy Policy</a> | <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">辽ICP备2024033391号</a></p>
+    </div>
+
+    <script>
+        // 获取当前年份
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.querySelector('.loading-screen');
+            const container = document.querySelector('.container');
+            
+            // 模拟内容加载完成
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    container.classList.add('visible');
+                }, 500);
+            }, 800);
+            
+            // 滚动动画
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            // 观察所有需要动画的元素
+            document.querySelectorAll('.card, .tech-stack, .social-links, .tech-item').forEach(el => {
+                el.classList.add('fade-in');
+                observer.observe(el);
+            });
+
+            // 为技能标签添加延迟动画
+            document.querySelectorAll('.tech-item').forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`;
+            });
+            
+            // 滚动进度条
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.querySelector('.progress-bar').style.width = scrolled + '%';
+            });
+
+            // 模态框功能
+            setupModals();
+        });
+
+        // 模态框管理
+        function setupModals() {
+            // 微信弹窗
+            const wechatModal = document.getElementById('wechat-modal');
+            const wechatBtn = document.getElementById('wechat-btn');
+            const wechatClose = document.getElementById('wechat-close');
+
+            // 博客弹窗
+            const blogModal = document.getElementById('blog-modal');
+            const blogBtn = document.getElementById('blog-btn');
+            const blogClose = document.getElementById('blog-close');
+
+            // 轮播图弹窗
+            const carouselModal = document.getElementById('carousel-modal');
+            const carouselModalImg = document.getElementById('carousel-modal-img');
+            const carouselModalTitle = document.getElementById('carousel-modal-title');
+            const carouselModalDesc = document.getElementById('carousel-modal-desc');
+            const carouselClose = document.getElementById('carousel-close');
+
+            // 显示微信弹窗
+            function showWechatModal() {
+                wechatModal.style.display = 'flex';
+                setTimeout(() => {
+                    wechatModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }, 10);
+            }
+
+            // 隐藏微信弹窗
+            function hideWechatModal() {
+                wechatModal.classList.remove('active');
+                setTimeout(() => {
+                    wechatModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            }
+
+            // 显示博客弹窗
+            function showBlogModal() {
+                blogModal.style.display = 'flex';
+                setTimeout(() => {
+                    blogModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }, 10);
+            }
+
+            // 隐藏博客弹窗
+            function hideBlogModal() {
+                blogModal.classList.remove('active');
+                setTimeout(() => {
+                    blogModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            }
+
+            // 显示轮播图弹窗
+            function showCarouselModal(slide) {
+                const modalContentId = slide.getAttribute('data-modal-content');
+                carouselModalImg.src = slide.querySelector('img').src;
+                carouselModalTitle.textContent = slide.querySelector('.slide-caption h3').textContent;
+                carouselModalDesc.innerHTML = getModalContent(modalContentId);
+                
+                carouselModal.style.display = 'flex';
+                setTimeout(() => {
+                    carouselModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }, 10);
+            }
+
+            // 隐藏轮播图弹窗
+            function hideCarouselModal() {
+                carouselModal.classList.remove('active');
+                setTimeout(() => {
+                    carouselModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 300);
+            }
+
+            // 绑定点击事件
+            wechatBtn.addEventListener('click', showWechatModal);
+            wechatClose.addEventListener('click', hideWechatModal);
+            
+            blogBtn.addEventListener('click', showBlogModal);
+            blogClose.addEventListener('click', hideBlogModal);
+
+            carouselClose.addEventListener('click', hideCarouselModal);
+
+            // 点击模态框背景关闭
+            wechatModal.addEventListener('click', (e) => {
+                if (e.target === wechatModal) hideWechatModal();
+            });
+
+            blogModal.addEventListener('click', (e) => {
+                if (e.target === blogModal) hideBlogModal();
+            });
+
+            carouselModal.addEventListener('click', (e) => {
+                if (e.target === carouselModal) hideCarouselModal();
+            });
+
+            // ESC键关闭弹窗
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    hideWechatModal();
+                    hideBlogModal();
+                    hideCarouselModal();
+                }
+            });
+        }
+
+        // 轮播图功能初始化
+        function initCarousel() {
+            const carousel = document.querySelector('.carousel');
+            const track = carousel.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = carousel.querySelector('.carousel-button.next');
+            const prevButton = carousel.querySelector('.carousel-button.prev');
+            const dotsNav = carousel.querySelector('.carousel-dots');
+            const dots = Array.from(dotsNav.children);
+            
+            let currentIndex = 0;
+            let touchStartX = 0;
+            let touchEndX = 0;
+            let autoPlayInterval;
+
+            // 移动到指定幻灯片
+            function moveToSlide(index) {
+                if (index < 0) index = slides.length - 1;
+                if (index >= slides.length) index = 0;
+                
+                currentIndex = index;
+                track.style.transform = `translateX(-${index * (100 / slides.length)}%)`;
+                updateDots();
+            }
+
+            // 更新导航圆点状态
+            function updateDots() {
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            // 自动播放
+            function startAutoPlay() {
+                stopAutoPlay();
+                autoPlayInterval = setInterval(() => {
+                    moveToSlide(currentIndex + 1);
+                }, 5000);
+            }
+
+            function stopAutoPlay() {
+                if (autoPlayInterval) {
+                    clearInterval(autoPlayInterval);
+                }
+            }
+
+            // 为前后按钮添加点击事件
+            nextButton.addEventListener('click', () => {
+                moveToSlide(currentIndex + 1);
+                stopAutoPlay();
+                startAutoPlay();
+            });
+
+            prevButton.addEventListener('click', () => {
+                moveToSlide(currentIndex - 1);
+                stopAutoPlay();
+                startAutoPlay();
+            });
+
+            // 轮播图点击事件 - 改为打开新页面
+            slides.forEach((slide, index) => {
+                slide.style.cursor = 'pointer';
+                slide.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const projectId = `project${index + 1}`;
+                    window.open(`project-detail.html?id=${projectId}`, '_blank');
+                });
+            });
+
+            // 触摸事件支持
+            track.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                stopAutoPlay();
+            }, { passive: true });
+
+            track.addEventListener('touchmove', (e) => {
+                touchEndX = e.touches[0].clientX;
+            }, { passive: true });
+
+            track.addEventListener('touchend', () => {
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        moveToSlide(currentIndex + 1);
+                    } else {
+                        moveToSlide(currentIndex - 1);
+                    }
+                }
+                startAutoPlay();
+            });
+
+            // 点击圆点导航
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    moveToSlide(index);
+                    stopAutoPlay();
+                    startAutoPlay();
+                });
+            });
+
+            // 鼠标悬停时暂停自动播放
+            carousel.addEventListener('mouseenter', stopAutoPlay);
+            carousel.addEventListener('mouseleave', startAutoPlay);
+
+            // 初始化
+            moveToSlide(0);
+            startAutoPlay();
+        }
+
+        // 页面加载完成后初始化轮播图
+        document.addEventListener('DOMContentLoaded', initCarousel);
+    </script>
+</body>
+
+</html>
